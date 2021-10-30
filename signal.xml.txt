@@ -1,0 +1,8 @@
+from lxml import etree
+from signxml import XMLSigner, XMLVerifier
+data_to_sign = "<Test/>"
+cert = open("PublicAUAforStagingServices.pem").read()
+key = open("PublicAUAforStagingServices.key").read()
+root = etree.fromstring(data_to_sign)
+signed_root = XMLSigner().sign(root, key=key, cert=cert)
+verified_data = XMLVerifier().verify(signed_root).signed_xml
